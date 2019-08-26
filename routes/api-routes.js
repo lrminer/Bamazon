@@ -1,2 +1,9 @@
 // Dependencies
-const connection = require('../config')
+
+// Routes as exports
+module.exports = function (app) {
+    app.get();
+    app.post();
+    app.delete();
+    
+};

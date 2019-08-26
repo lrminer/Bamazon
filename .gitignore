@@ -62,3 +62,10 @@ typings/
 
 # connection credentials
 config.json
+
+# schema / sql 
+.sql
+schema.sql
+
+# homework instructions
+.homework-instructions.md
