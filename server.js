@@ -1,6 +1,8 @@
 // Server.js 
 // Dependencies
 const express = require('express');
+const db = require('./models');
+
 
 // Express App
 const app = express();
@@ -19,7 +21,10 @@ app.use(express.static('./app/public'));
 // require('./routes/api-routes')(app);
 require('./routes/html-routes')(app);
 
-// Listen
-app.listen(PORT, function () {
-    console.log('App listening on PORT ' + PORT + '\nhttp://localhost:' + PORT);
+// Syncing and then starting the express app
+db.sequelize.sync({
+}).then(function () {
+    app.listen(PORT, function () {
+        console.log('App listening on PORT ' + PORT + '\nhttp://localhost:' + PORT);
+    });
 });
