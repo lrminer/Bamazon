@@ -3,12 +3,19 @@ const db = require('../models');
 
 // Routes as exports
 module.exports = function (app) {
-    app.get('api/products/all', function(req,res) {
-        db.Product.findAll({}).then(function(dbProducts){
+    app.get('/api/products/all', function (req, res) {
+        db.Product.findAll({}).then(function (dbProducts) {
             res.json(dbProducts);
         });
     });
-    // app.post();
+
+    app.post('/api/products', function (req, res) {
+        db.Product.create(
+            req.body
+        ).then(function(result){
+            res.json(result);
+        });
+    });
     // app.delete();
-    
+
 };
