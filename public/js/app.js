@@ -1,16 +1,27 @@
 $(document).ready(function () {
 
     // on page load makes a get request to display all of the products
-    // $.get('/api/products', function (data) {
-    //     console.log(data);
-    //     for (let i = 0; i < data.length; i++) {
-    //         let column = $('<div class="col"');
+    $.get('/api/products', function (data) {
+        console.log(data);
+        // console.log(data[0]);
+        for (let i = 0; i < data.length; i++) {
+            let column = $('<div class="col">');
 
-    //         // TODO append data to div.col
+            let img = $('<img>').attr('src', data[i].image_url);
+            let product_name = $('<h2>').text(data[i].product_name);
+            let price = $('<p>').text('Price: $' + data[i].price);
+            let department_name = $('<p>').text('Department: ' + data[i].department_name)
+            let stock_quantity = $('<p>').text('Stock: ' + data[i].stock_quantity);
 
-    //         $('#product-list').append(column);
-    //     }
-    // });
+            column.append(img, product_name, price, department_name, stock_quantity);
+
+            $('#product-list').append(column);
+        }
+
+
+    });
+
+    // $('#product-list').append("Hello World");
 
     $('#product-submit').on('click', function (event) {
         event.preventDefault();
@@ -31,11 +42,11 @@ $(document).ready(function () {
         };
         console.log(dataToSend);
 
-        $.post('/api/products', dataToSend, function(){
+        $.post('/api/products', dataToSend, function () {
 
-        }).then(function(results) {
-             console.log(results);
-             console.log("Success");
+        }).then(function (results) {
+            console.log(results);
+            console.log("Success");
         });
 
         // $.ajax({
@@ -47,7 +58,7 @@ $(document).ready(function () {
         //     console.log(results);
         //     console.log("Success");
         // });
-    
+
     });
 
 
