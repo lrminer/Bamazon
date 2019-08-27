@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     // on page load makes a get request to display all of the products
-    // $.get('/api/products/all', function (data) {
+    // $.get('/api/products', function (data) {
     //     console.log(data);
     //     for (let i = 0; i < data.length; i++) {
     //         let column = $('<div class="col"');
@@ -27,14 +27,27 @@ $(document).ready(function () {
             price: price,
             department_name: department_name,
             stock_quantity: stock_quantity,
-            image_url: image_url,  
+            image_url: image_url,
         };
+        console.log(dataToSend);
 
-        $.post('/api/products/', dataToSend, function(){
+        $.post('/api/products', dataToSend, function(){
 
         }).then(function(results) {
-            console.log(results);
+             console.log(results);
+             console.log("Success");
         });
+
+        // $.ajax({
+        //     type: "POST",
+        //     url: '/api/products',
+        //     data: dataToSend,
+
+        // }).then(function (results) {
+        //     console.log(results);
+        //     console.log("Success");
+        // });
+    
     });
 
 
