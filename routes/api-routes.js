@@ -2,8 +2,8 @@
 
 // Routes as exports
 module.exports = function (app) {
-    app.get();
-    app.post();
-    app.delete();
+    // app.get();
+    // app.post();
+    // app.delete();
     
 };
