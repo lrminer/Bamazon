@@ -9,11 +9,21 @@ module.exports = function (app) {
         });
     });
 
+    app.get('/api/products/department/:department', function (req, res) {
+        db.Product.findAll({
+            where: {
+                department_name: req.params.department
+            }
+        }).then(function(dbProducts){
+            res.json(dbProducts);
+        });
+    });
+
     app.post('/api/products/', function (req, res) {
         console.log(req);
         db.Product.create(
             req.body
-        ).then(function(result){
+        ).then(function (result) {
             res.json(result);
         });
     });

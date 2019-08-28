@@ -12,13 +12,27 @@ $(document).ready(function () {
             let price = $('<p>').text('Price: $' + data[i].price);
             let department_name = $('<p>').text('Department: ' + data[i].department_name)
             let stock_quantity = $('<p>').text('Stock: ' + data[i].stock_quantity);
+            let buy_button = $(`<a class="btn btn-primary" href="/buy/id/${data[i].id}" role="button">`).text('BUY');
 
-            column.append(img, product_name, price, department_name, stock_quantity);
+            column.append(img, product_name, price, department_name, stock_quantity, buy_button);
 
             $('#product-list').append(column);
         }
 
+    });
 
+    $('a.department-link').on('click', function (e) {
+        e.preventDefault();
+
+        $('#product-list').empty();
+        
+        const department_name = $(this).attr('value');
+
+        console.log(department_name);
+
+        $.get('/api/products/department/' + department_name, function (data) {
+            console.log(data);
+        })
     });
 
     // $('#product-list').append("Hello World");
