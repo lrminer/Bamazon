@@ -4,20 +4,7 @@ $(document).ready(function () {
     $.get('/api/products', function (data) {
         console.log(data);
         // console.log(data[0]);
-        for (let i = 0; i < data.length; i++) {
-            let column = $('<div class="col">');
-
-            let img = $('<img>').attr('src', data[i].image_url);
-            let product_name = $('<h2>').text(data[i].product_name);
-            let price = $('<p>').text('Price: $' + data[i].price);
-            let department_name = $('<p>').text('Department: ' + data[i].department_name)
-            let stock_quantity = $('<p>').text('Stock: ' + data[i].stock_quantity);
-            let buy_button = $(`<a class="btn btn-primary" href="/buy/id/${data[i].id}" role="button">`).text('BUY');
-
-            column.append(img, product_name, price, department_name, stock_quantity, buy_button);
-
-            $('#product-list').append(column);
-        }
+        displayProducts(data);
 
     });
 
@@ -32,7 +19,9 @@ $(document).ready(function () {
 
         $.get('/api/products/department/' + department_name, function (data) {
             console.log(data);
-        })
+            displayProducts(data);
+        });
+
     });
 
     // $('#product-list').append("Hello World");
@@ -75,5 +64,21 @@ $(document).ready(function () {
 
     });
 
+    function displayProducts(data) {
+        for (let i = 0; i < data.length; i++) {
+            let column = $('<div class="col">');
+
+            let img = $('<img>').attr('src', data[i].image_url);
+            let product_name = $('<h2>').text(data[i].product_name);
+            let price = $('<p>').text('Price: $' + data[i].price);
+            let department_name = $('<p>').text('Department: ' + data[i].department_name)
+            let stock_quantity = $('<p>').text('Stock: ' + data[i].stock_quantity);
+            let buy_button = $(`<a class="btn btn-primary" href="/buy/id/${data[i].id}" role="button">`).text('BUY');
+
+            column.append(img, product_name, price, department_name, stock_quantity, buy_button);
+
+            $('#product-list').append(column);
+        }
+    }
 
 });
