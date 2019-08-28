@@ -14,7 +14,7 @@ module.exports = function (app) {
             where: {
                 department_name: req.params.department
             }
-        }).then(function(dbProducts){
+        }).then(function (dbProducts) {
             res.json(dbProducts);
         });
     });
@@ -27,6 +27,14 @@ module.exports = function (app) {
             res.json(result);
         });
     });
-    // app.delete();
+
+    app.put('/api/products/id/:id', function (req, res) {
+        db.Product.update(req.body, {
+            where: {
+                id: req.body.id
+            }
+        })
+    });
+    
 
 };
