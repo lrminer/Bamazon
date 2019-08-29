@@ -1,3 +1,24 @@
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// PUT THIS IN SEPARATE FILES BASED ON WHERE THE CLICK EVENT IS HAPPENING
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
 $(document).ready(function () {
 
     // on page load makes a get request to display all of the products
@@ -12,7 +33,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         $('#product-list').empty();
-        
+
         const department_name = $(this).attr('value');
 
         console.log(department_name);
@@ -24,10 +45,8 @@ $(document).ready(function () {
 
     });
 
-    // $('#product-list').append("Hello World");
 
     $('#product-submit').on('click', function (event) {
-        event.preventDefault();
 
         // Capture user input
         const product_name = $('#product-name').val();
@@ -45,7 +64,7 @@ $(document).ready(function () {
         };
         console.log(dataToSend);
 
-        $.post('/api/products', dataToSend, function () {
+        $.post('/api/products/', dataToSend, function () {
 
         }).then(function (results) {
             console.log(results);
@@ -64,18 +83,44 @@ $(document).ready(function () {
 
     });
 
+
+
     function displayProducts(data) {
         for (let i = 0; i < data.length; i++) {
-            let column = $('<div class="col">');
+            let column = $('<div class="col product">');
+
 
             let img = $('<img>').attr('src', data[i].image_url);
             let product_name = $('<h2>').text(data[i].product_name);
             let price = $('<p>').text('Price: $' + data[i].price);
-            let department_name = $('<p>').text('Department: ' + data[i].department_name)
+            let department_name = $('<p>').text('Department: ' + data[i].department_name);
             let stock_quantity = $('<p>').text('Stock: ' + data[i].stock_quantity);
-            let buy_button = $(`<a class="btn btn-primary" href="/buy/id/${data[i].id}" role="button">`).text('BUY');
+            let buy_amount = $('<input>').attr('placeholder', 'Quantity').attr('type', "number").attr('data-product-id', `${data[i].id}`);
+            let buy_button = $(`<button class="btn btn-primary btn-block buy-btn" href="#" role="button" data-product-id="${data[i].id}">`).text('BUY');
 
-            column.append(img, product_name, price, department_name, stock_quantity, buy_button);
+            buy_button.on('click', function (e) {
+                e.preventDefault();
+                const which_product = $(this).attr('data-product-id');
+                const how_many = 1;
+                const stock_quantity = 100;
+
+                dataToSend = {
+                    id: which_product,
+                    amount: how_many,
+                    stock_quantity: stock_quantity
+                };
+                console.log(dataToSend);
+
+                $.ajax({
+                    method: 'PUT',
+                    url: '/api/products/id/' + which_product,
+                    data: dataToSend
+                }).then(function(){
+                    console.log('success');
+                });
+            });
+
+            column.append(img, product_name, price, department_name, stock_quantity, buy_amount, buy_button);
 
             $('#product-list').append(column);
         }

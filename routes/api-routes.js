@@ -29,11 +29,22 @@ module.exports = function (app) {
     });
 
     app.put('/api/products/id/:id', function (req, res) {
-        db.Product.update(req.body, {
-            where: {
-                id: req.body.id
-            }
-        })
+        console.log(req.body);
+
+        if (req.body.stock_quantity > req.body.amount) {
+            db.Product.update({
+                stock_quantity: (req.body.stock_quantity-req.body.amount)
+            }, {
+                where: {
+                    id: req.body.id
+                }
+            }).then(function(result){
+                res.json(result);
+            });
+        } else {
+            res.json( {message: "Insufficient Quantity!"});
+        }
+
     });
     
 

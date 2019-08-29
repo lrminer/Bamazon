@@ -9,5 +9,5 @@ module.exports = function (app) {
     app.get('/sell', function (req, res) {
         res.sendFile(path.join(__dirname, "../public/sell.html"));
     });
-
+    
 };
