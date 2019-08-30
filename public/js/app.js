@@ -94,15 +94,20 @@ $(document).ready(function () {
             let product_name = $('<h2>').text(data[i].product_name);
             let price = $('<p>').text('Price: $' + data[i].price);
             let department_name = $('<p>').text('Department: ' + data[i].department_name);
-            let stock_quantity = $('<p>').text('Stock: ' + data[i].stock_quantity);
-            let buy_amount = $('<input>').attr('placeholder', 'Quantity').attr('type', "number").attr('data-product-id', `${data[i].id}`);
-            let buy_button = $(`<button class="btn btn-primary btn-block buy-btn" href="#" role="button" data-product-id="${data[i].id}">`).text('BUY');
+            let stock_quantity = $('<p>').text('Stock: ' + data[i].stock_quantity).attr('value', data[i].stock_quantity);
 
+            // let form = $('<form>').attr('method', 'PUT').attr('action', '/api/products/id/' + data[i].id);
+
+            let buy_amount = $('<input>').attr('placeholder', 'Quantity').attr('type', "number").attr('data-product-id', `${data[i].id}`);
+
+            let buy_button = $(`<input type="button" class="btn btn-primary btn-block buy-btn" href="#" role="button" data-product-id="${data[i].id}">`);
+
+            //         $('<input>').attr('','').attr('','').attr('','')
             buy_button.on('click', function (e) {
                 e.preventDefault();
                 const which_product = $(this).attr('data-product-id');
-                const how_many = 1;
-                const stock_quantity = 100;
+                const how_many = $(this).prev().val();
+                const stock_quantity = $(this).prev().prev().text();
 
                 dataToSend = {
                     id: which_product,
@@ -115,10 +120,12 @@ $(document).ready(function () {
                     method: 'PUT',
                     url: '/api/products/id/' + which_product,
                     data: dataToSend
-                }).then(function(){
+                }).then(function () {
                     console.log('success');
                 });
             });
+
+            // form.append(buy_amount, buy_button);
 
             column.append(img, product_name, price, department_name, stock_quantity, buy_amount, buy_button);
 

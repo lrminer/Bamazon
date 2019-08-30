@@ -61,7 +61,7 @@ typings/
 .next
 
 # connection credentials
-config.json
+
 
 # schema / sql 
 .sql

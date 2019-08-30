@@ -20,6 +20,7 @@
   "homepage": "https://github.com/lrminer/Bamazon#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "mysql": "^2.17.1",
     "mysql2": "^1.6.5",
     "sequelize": "^5.16.0",
     "sequelize-cli": "^5.5.0"
